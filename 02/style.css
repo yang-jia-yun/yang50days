@@ -1,0 +1,56 @@
+.container{
+    position: absolute;
+    top: 50%;
+
+    text-align: center;
+
+}
+.container-div{
+    width: 350px;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+
+}
+.line{
+    position: absolute;
+    top: 10px;
+    height: 4px;
+    width: 350px;
+    background-color: #999;
+    z-index: -1;
+    flex: 1;
+}
+.line-active{
+    position: absolute;
+    top: 10px;
+    height: 4px;
+    z-index: -1;
+    background-color: #3498db;
+}
+.circular{
+    /* margin-right: 20px; */
+    border-radius: 50%;
+    text-align: center;
+    border:1px solid #e0e0e0;
+    color: #999;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    background-color: white;
+}
+.active{
+    border:1px solid #3498db;
+    color: #3498db;
+}
+.button{
+    background-color: #3498db;
+    color: white;
+    border: 0;
+    width: 100px;
+    height: 30px;
+    border-radius: 10px;
+}
+button[disabled="true"]{
+    background-color: #999;
+}

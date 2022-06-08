@@ -1,0 +1,23 @@
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90vw;
+    margin: 0 ;
+    overflow: hidden;
+}
+.panel{
+    height: 80vh;
+   background-repeat: no-repeat;
+   background-size: cover;
+   background-position: center;
+   width: 90vw;
+   border-radius: 40px;
+   margin-right: 20px;
+   text-align: center;
+   flex: 0.5;
+}
+.active{
+    flex:5;
+    
+}
