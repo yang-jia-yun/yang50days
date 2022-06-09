@@ -1,0 +1,83 @@
+.circular {
+	border-radius: 50%;
+	background-color: red;
+	width: 200px;
+	height: 200px;
+	position: relative;
+	top: -100px;
+	left: -100px;
+	transition: transform 0.5s;
+	transform: rotateZ(0deg);
+}
+.rotate .circular {
+	transform: rotateZ(-75deg);
+}
+.card {
+	background-color: white;
+	width: 100vw;
+	height: 100vh;
+	transition: transform 0.5s;
+	transform-origin: left top;
+	transform: rotateZ(0deg);
+}
+body {
+	background-color: black;
+	padding: 0;
+	margin: 0;
+}
+.open {
+	position: absolute;
+	right: 30%;
+	bottom: 30%;
+	color: white;
+}
+.close {
+	position: absolute;
+	bottom: 30%;
+	left: 30%;
+	color: white;
+}
+.content {
+	text-align: center;
+}
+img {
+	width: 500px;
+}
+.rotate {
+	transform-origin: left top;
+	transform: rotateZ(-15deg);
+}
+.menu {
+	color: white;
+	position: absolute;
+	bottom: 30px;
+	left: 20px;
+}
+/* .rotate + .menu p:nth-of-type(2) {
+	transform: translateX(50%);
+}
+.rotate + .menu p:nth-of-type(3) {
+	transform: translateX(100%);
+} */
+
+.menu p:nth-of-type(1) {
+	transform: translateX(-100%);
+}
+.menu p:nth-of-type(2) {
+	margin-left: 20px;
+	transform: translateX(-150%);
+}
+.menu p:nth-of-type(3) {
+	margin-left: 40px;
+	transform: translateX(-200%);
+}
+
+.menu p {
+	transition: transform .4s ease-in;
+	/* transition-delay: .3s; */
+	transform: translateX(-100%);
+}
+.rotate + .menu p {
+	/* left: 20px; */
+	transform: translateX(0) !important;
+}
