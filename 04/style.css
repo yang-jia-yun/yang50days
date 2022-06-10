@@ -1,0 +1,28 @@
+body {
+	background-image: linear-gradient(135deg, #abdcff 10%, #229bf1 100%);
+}
+.main {
+	display: flex;
+	height: 100vh;
+	align-items: center;
+	justify-content: center;
+}
+.card {
+	width: 50px;
+	height: 50px;
+	line-height: 50px;
+	background-color: white;
+	text-align: center;
+}
+input {
+	width: 0px;
+	height: 50px;
+	margin: 0;
+	border: 0;
+	transition: all 0.5s;
+	outline: none;
+	box-sizing: border-box !important;
+}
+.show {
+	width: 150px;
+}
