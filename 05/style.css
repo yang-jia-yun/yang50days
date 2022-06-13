@@ -1,0 +1,18 @@
+.main {
+	width: 100vw;
+	height: 100vh;
+	background-size: cover;
+
+	background-image: url(https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fn.sinaimg.cn%2Fsinakd20200729ac%2F218%2Fw1112h706%2F20200729%2Fb6e6-iwxpesx9683630.png&refer=http%3A%2F%2Fn.sinaimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1657368827&t=0b57f002479d320927005651419a5a58);
+}
+p {
+	color: white;
+	font-size: 72px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+body {
+	position: relative;
+}
