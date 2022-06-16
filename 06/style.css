@@ -1,0 +1,52 @@
+.block {
+	width: 400px;
+	height: 200px;
+	background-color: cornflowerblue;
+	border-radius: 16px;
+	text-align: center;
+	line-height: 200px;
+	font-size: 36px;
+	color: white;
+	margin-bottom: 10px;
+}
+.main {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	/* height: auto;
+	max-height: 10000px; */
+	height: 100vh;
+    overflow: auto;
+}
+.title {
+	font-size: 36px;
+	margin: 20px 0;
+}
+
+/* 动画代码 */
+@keyframes example {
+	from {
+		left: 0px;
+	}
+	to {
+		left: 200px;
+	}
+}
+@keyframes example2 {
+	from {
+		right: 0px;
+	}
+	to {
+		right: 200px;
+	}
+}
+
+/* 向此元素应用动画效果 */
+.example {
+	animation-name: example;
+	animation-duration: 4s;
+}
+.example2 {
+	animation-name: example2;
+	animation-duration: 4s;
+}
