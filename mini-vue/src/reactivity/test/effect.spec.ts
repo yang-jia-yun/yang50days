@@ -1,4 +1,4 @@
-import { effect } from '../effect'
+import { effect, stop } from '../effect'
 import { reactive } from '../reactive'
 
 describe('effect', () => {
@@ -69,5 +69,31 @@ describe('effect', () => {
 
 		expect(dummy).toBe(2)
 
+	})
+
+	it('stop', () => {
+		const props = reactive({ foo: 1 })
+		let dummy
+
+		const runner = effect(() => {
+			dummy = props.foo
+		})
+
+		expect(dummy).toBe(1)
+
+		// props.foo++
+		props.foo = 2
+		expect(dummy).toBe(2)
+
+		// 暂停 runner，effect 回调不会被执行
+		stop(runner)
+
+		// props.foo++ // 3 测试失败
+		props.foo = 3  // 测试通过
+		expect(dummy).toBe(2)
+
+		// 解除 暂停状态，fn 正常运行
+		runner()
+		expect(dummy).toBe(3)
 	})
 })
