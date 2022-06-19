@@ -1,7 +1,9 @@
 class ReactiveEffect {
 	private _fn: Function
 
-	constructor(fn: Function) {
+	// scheduler 为可选参数，不一定存在 使用 public scheduler?
+	// 代表着如果存在 scheduler ，则编译时会 自动绑定 在实例上？？
+	constructor(fn: Function, public scheduler?) {
 		this._fn = fn
 	}
 	run() {
@@ -32,14 +34,21 @@ export function trigger(target, key) {
 	let deps = targetMaps.get(target)
 	let effects = deps.get(key)
 
-	effects.forEach(effect => effect.run())
+	effects.forEach(effect => {
+		// 根据是否存在 scheduler 判断应该执行的fn
+		if (effect.scheduler) {
+			effect.scheduler()
+		} else {
+			effect.run()
+		}
+	})
 }
 
 
 let activeEffect
-export function effect(fn: Function) {
+export function effect(fn: Function, options = {}) {
 	// 创建一个依赖
-	const _effect = new ReactiveEffect(fn)
+	const _effect = new ReactiveEffect(fn, options.scheduler)
 
 	_effect.run()
 
