@@ -1,6 +1,7 @@
 class ReactiveEffect {
 	private _fn: Function
 	deps = []
+	active = true
 
 	// scheduler 为可选参数，不一定存在 使用 public scheduler?
 	// 代表着如果存在 scheduler ，则编译时会 自动绑定 在实例上？？
@@ -9,12 +10,20 @@ class ReactiveEffect {
 	}
 	run() {
 		activeEffect = this
+
+		if (!this.active) this.active = true // 被暂停状态下，恢复stop状态
+
 		return this._fn()
 	}
 	stop() {
 		// 应该清空对应 dep
-		cleanEffects(this)
+		// cleanEffects(this)
 
+		// 出于性能考虑,添加状态控制
+		if (this.active) {
+			cleanEffects(this)
+			this.active = false
+		}
 	}
 }
 
@@ -32,6 +41,9 @@ export function track(target, key) {
 		dep = new Set()
 		depsMap.set(key, dep)
 	}
+
+	// 仅在 get 阶段，不存在 activeEffect 对象
+	if (!activeEffect) return
 
 	dep.add(activeEffect)
 

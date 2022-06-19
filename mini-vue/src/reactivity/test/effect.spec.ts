@@ -95,5 +95,13 @@ describe('effect', () => {
 		// 解除 暂停状态，fn 正常运行
 		runner()
 		expect(dummy).toBe(3)
+
+		// 再次stop
+		stop(runner)
+		props.foo = 4
+		expect(dummy).toBe(3)
+
+		runner()
+		expect(dummy).toBe(4)
 	})
 })
