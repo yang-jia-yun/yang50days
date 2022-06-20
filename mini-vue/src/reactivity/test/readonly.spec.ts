@@ -1,4 +1,4 @@
-import { readonly } from "../reactive"
+import { isReadonly, readonly } from "../reactive"
 
 describe('readonly', () => {
 	it('happy path', () => {
@@ -9,6 +9,9 @@ describe('readonly', () => {
 
 		expect(wrapped).not.toBe(original)
 		expect(wrapped.age).toBe(10)
+
+		expect(isReadonly(wrapped)).toBe(true)
+		expect(isReadonly(original)).toBe(false)
 	})
 
 	it('warn when use set', () => {

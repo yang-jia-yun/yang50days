@@ -1,4 +1,4 @@
-import { reactive } from '../reactive'
+import { isReactive, reactive } from '../reactive'
 
 describe('reactive tets', () => {
 	// test('main path', () => {
@@ -14,5 +14,7 @@ describe('reactive tets', () => {
 
 		expect(observed).not.toBe(original)
 		expect(observed.age).toBe(1)
+		expect(isReactive(observed)).toBe(true)
+		expect(isReactive(original)).toBe(false)
 	})
 })
