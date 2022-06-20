@@ -1,7 +1,10 @@
+import { extend } from '../shared'
+
 class ReactiveEffect {
 	private _fn: Function
 	deps = []
 	active = true
+	onStop?: () => void
 
 	// scheduler 为可选参数，不一定存在 使用 public scheduler?
 	// 代表着如果存在 scheduler ，则编译时会 自动绑定 在实例上？？
@@ -22,6 +25,9 @@ class ReactiveEffect {
 		// 出于性能考虑,添加状态控制
 		if (this.active) {
 			cleanEffects(this)
+			if (this.onStop) {
+				this.onStop()
+			}
 			this.active = false
 		}
 	}
@@ -75,6 +81,9 @@ let activeEffect
 export function effect(fn: Function, options: any = {}) {
 	// 创建一个依赖
 	const _effect = new ReactiveEffect(fn, options.scheduler)
+	// _effect.onStop = options.onStop
+	// Object.assign(_effect, options)
+	extend(_effect, options)
 	_effect.run()
 
 	const runner: any = _effect.run.bind(_effect)

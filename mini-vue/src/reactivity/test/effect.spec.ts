@@ -104,4 +104,25 @@ describe('effect', () => {
 		runner()
 		expect(dummy).toBe(4)
 	})
+
+	it('onStop', () => {
+		const obj = reactive({
+			prop: 1
+		})
+
+		const onStop = jest.fn()
+
+		let dummy
+
+		const runner = effect(() => {
+			dummy = obj.prop
+		}, {
+			onStop
+		})
+
+
+		stop(runner)
+		// 当调用stop时，如果存在onStop函数，则该函数会被执行
+		expect(onStop).toBeCalledTimes(1)
+	})
 })
