@@ -1,14 +1,15 @@
 import { track, trigger } from "./effect"
 import { reactive, ReactiveFlags, readonly } from "./reactive"
-import { isObject } from '../shared'
+import { isObject, extend } from '../shared'
 
 // 实例化之后缓存，避免每次包装对象时都创建一个函数，提高性能
 const get = createGetter()
 const set = createSetter()
 const readonlyGet = createGetter(true)
+const shallowReadonlyGet = createGetter(true, true)
 
 
-function createGetter(isReadonly = false) {
+function createGetter(isReadonly = false, shallow = false) {
 	return (target, key) => {
 		if (key === ReactiveFlags.IS_REACTIVE) {
 			return !isReadonly
@@ -17,6 +18,8 @@ function createGetter(isReadonly = false) {
 		}
 
 		const res = Reflect.get(target, key)
+
+		if (shallow) return res
 
 		// 递归处理对象元素为响应对象
 		if (isObject(res)) {
@@ -57,3 +60,7 @@ export const readonlyHandler = {
 		return true
 	}
 }
+
+export const shallowReadonlyHandler = extend({}, readonlyHandler, {
+	get: shallowReadonlyGet
+})

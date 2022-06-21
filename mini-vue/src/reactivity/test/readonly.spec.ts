@@ -35,5 +35,8 @@ describe('readonly', () => {
 
 		expect(isReadonly(user)).toBe(true)
 		expect(isReadonly(user.info)).toBe(true)
+
+		user.info.sex = 2
+		expect(user.info.sex).toBe(1)
 	})
 })
