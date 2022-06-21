@@ -1,5 +1,7 @@
 import { extend } from '../shared'
 
+let activeEffect
+let shouldTrack
 class ReactiveEffect {
 	private _fn: Function
 	deps = []
@@ -12,11 +14,22 @@ class ReactiveEffect {
 		this._fn = fn
 	}
 	run() {
+
+		// if (!this.active) this.active = true // 被暂停状态下，恢复stop状态
+		if (!this.active) {
+			shouldTrack = false
+			return this._fn()
+		}
+
+		// 仅需要收集的情况下赋值
 		activeEffect = this
 
-		if (!this.active) this.active = true // 被暂停状态下，恢复stop状态
-
-		return this._fn()
+		// 打开开关，触发依赖收集
+		shouldTrack = true
+		const res = this._fn()
+		// 关闭，恢复默认状态，如果当前被 stop 了，则不会触发依赖的收集
+		shouldTrack = null
+		return res
 	}
 	stop() {
 		// 应该清空对应 dep
@@ -35,6 +48,13 @@ class ReactiveEffect {
 
 const targetMaps = new Map()
 export function track(target, key) {
+	// // 被stop了，则不触发收集
+	// if (!shouldTrack) return
+	// // 仅在 get 阶段，不存在 activeEffect 对象
+	// if (!activeEffect) return
+
+	if (!isTracking()) return
+
 	let depsMap = targetMaps.get(target)
 
 	if (!depsMap) {
@@ -48,13 +68,17 @@ export function track(target, key) {
 		depsMap.set(key, dep)
 	}
 
-	// 仅在 get 阶段，不存在 activeEffect 对象
-	if (!activeEffect) return
+	// 添加判断，避免重复收集依赖
+	if (dep.has(activeEffect)) return
 
 	dep.add(activeEffect)
-
 	// 收集dep，用于stop
 	activeEffect.deps.push(dep)
+}
+
+function isTracking() {
+	// 需要判断 shouldTrack !== undefined ?
+	return activeEffect && shouldTrack
 }
 
 export function trigger(target, key) {
@@ -77,7 +101,6 @@ export function stop(runner) {
 }
 
 
-let activeEffect
 export function effect(fn: Function, options: any = {}) {
 	// 创建一个依赖
 	const _effect = new ReactiveEffect(fn, options.scheduler)
@@ -97,4 +120,7 @@ function cleanEffects(effect) {
 		// dep 是一个 Set 集合
 		dep.delete(effect)
 	})
+
+	// 相关依赖删除后，可以清空数组
+	effect.deps.length = 0
 }

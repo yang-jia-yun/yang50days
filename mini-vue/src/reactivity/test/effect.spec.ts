@@ -88,8 +88,8 @@ describe('effect', () => {
 		// 暂停 runner，effect 回调不会被执行
 		stop(runner)
 
-		// props.foo++ // 3 测试失败
-		props.foo = 3  // 测试通过
+		props.foo++ // 3 测试失败
+		// props.foo = 3  // 测试通过
 		expect(dummy).toBe(2)
 
 		// 解除 暂停状态，fn 正常运行
