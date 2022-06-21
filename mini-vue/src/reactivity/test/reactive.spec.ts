@@ -17,4 +17,16 @@ describe('reactive tets', () => {
 		expect(isReactive(observed)).toBe(true)
 		expect(isReactive(original)).toBe(false)
 	})
+
+	it('nested obj is reactive obj', () => {
+		const user = reactive({
+			age: 1,
+			info: {
+				sex: 1
+			}
+		})
+
+		expect(isReactive(user)).toBe(true)
+		expect(isReactive(user.info)).toBe(true)
+	})
 })

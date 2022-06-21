@@ -24,4 +24,16 @@ describe('readonly', () => {
 
 		expect(console.warn).toBeCalled()
 	})
+
+	it('nested obj is readonly obj', () => {
+		const user = readonly({
+			age: 1,
+			info: {
+				sex: 1
+			}
+		})
+
+		expect(isReadonly(user)).toBe(true)
+		expect(isReadonly(user.info)).toBe(true)
+	})
 })
