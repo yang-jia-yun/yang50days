@@ -1,4 +1,4 @@
-import { isReactive, reactive } from '../reactive'
+import { isReactive, reactive, isProxy } from '../reactive'
 
 describe('reactive tets', () => {
 	// test('main path', () => {
@@ -16,6 +16,9 @@ describe('reactive tets', () => {
 		expect(observed.age).toBe(1)
 		expect(isReactive(observed)).toBe(true)
 		expect(isReactive(original)).toBe(false)
+
+		expect(isProxy(original)).toBe(false)
+		expect(isProxy(observed)).toBe(true)
 	})
 
 	it('nested obj is reactive obj', () => {

@@ -1,4 +1,4 @@
-import { isReadonly, readonly } from "../reactive"
+import { isProxy, isReadonly, readonly } from "../reactive"
 
 describe('readonly', () => {
 	it('happy path', () => {
@@ -12,6 +12,10 @@ describe('readonly', () => {
 
 		expect(isReadonly(wrapped)).toBe(true)
 		expect(isReadonly(original)).toBe(false)
+
+
+		expect(isProxy(original)).toBe(false)
+		expect(isProxy(wrapped)).toBe(true)
 	})
 
 	it('warn when use set', () => {
