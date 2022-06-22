@@ -6,6 +6,7 @@ class RefImpl {
 	private _value: any
 	private dep = new Set()
 	private _originValue: any
+	private __v_is_ref = true
 	constructor(value) {
 		// 单值
 		// this._value = value
@@ -47,13 +48,22 @@ function convert(value) {
 	return isObject(value) ? reactive(value) : value
 }
 
+function trackRefValue(ref) {
+	if (isTracking()) {
+		trackEffects(ref.dep)
+	}
+}
+
 export function ref(value) {
 	// 返回一个带有 .value 的对象
 	return new RefImpl(value)
 }
 
-function trackRefValue(ref) {
-	if (isTracking()) {
-		trackEffects(ref.dep)
-	}
+export function isRef(ref) {
+	return !!ref.__v_is_ref
+}
+
+export function unRef(ref) {
+	// 如果值是 一个 ref 对象，则返回原始值， 否则返回 值本身
+	return isRef(ref) ? ref._originValue : ref
 }
