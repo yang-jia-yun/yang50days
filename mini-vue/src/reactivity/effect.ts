@@ -68,6 +68,19 @@ export function track(target, key) {
 		depsMap.set(key, dep)
 	}
 
+	trackEffects(dep)
+
+	// // 添加判断，避免重复收集依赖
+	// if (dep.has(activeEffect)) return
+
+	// dep.add(activeEffect)
+	// // 收集dep，用于stop
+	// activeEffect.deps.push(dep)
+}
+
+// 重构，方便外部调用
+export function trackEffects(dep) {
+
 	// 添加判断，避免重复收集依赖
 	if (dep.has(activeEffect)) return
 
@@ -76,23 +89,36 @@ export function track(target, key) {
 	activeEffect.deps.push(dep)
 }
 
-function isTracking() {
+export function isTracking() {
 	// 需要判断 shouldTrack !== undefined ?
 	return activeEffect && shouldTrack
 }
 
 export function trigger(target, key) {
 	let deps = targetMaps.get(target)
-	let effects = deps.get(key)
+	let dep = deps.get(key)
 
-	effects.forEach(effect => {
+	triggerEffects(dep)
+
+	// dep.forEach(effect => {
+	// 	// 根据是否存在 scheduler 判断应该执行的fn
+	// 	if (effect.scheduler) {
+	// 		effect.scheduler()
+	// 	} else {
+	// 		effect.run()
+	// 	}
+	// })
+}
+
+export function triggerEffects(dep) {
+	for (const effect of dep) {
 		// 根据是否存在 scheduler 判断应该执行的fn
 		if (effect.scheduler) {
 			effect.scheduler()
 		} else {
 			effect.run()
 		}
-	})
+	}
 }
 
 export function stop(runner) {
