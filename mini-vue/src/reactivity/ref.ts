@@ -67,3 +67,21 @@ export function unRef(ref) {
 	// 如果值是 一个 ref 对象，则返回原始值， 否则返回 值本身
 	return isRef(ref) ? ref._originValue : ref
 }
+
+export function proxyRefs(raw) {
+	return new Proxy(raw, {
+		get(target, key) {
+			// 如果读取的值是一个 ref ，则返回结构后的值
+			// 如果值非 ref， 则直接返回，次数可套用 unRef
+			return unRef(Reflect.get(target, key))
+		},
+		set(target, key, value) {
+			// 理论上，设置的值都应该直接替换
+			// 但是，如果原本的值是一个 ref， 且新的值 非 ref， 则应直接修改 .value
+			if (isRef(target[key]) && !isRef(value)) {
+				return target[key].value = value
+			}
+			return Reflect.set(target, key, value)
+		}
+	})
+}
