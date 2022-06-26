@@ -7,7 +7,8 @@ export function render(vnode, container) {
 
 function patch(vnode, container) {
 	// 处理 component
-
+	// TODO 注意：vnode 可能是 一个 element ,需要转化成 vnode
+	// processElement()
 	processComponent(vnode, container)
 }
 

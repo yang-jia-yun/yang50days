@@ -1,9 +1,6 @@
-export function h(type, props?, children?) {
-	const vnode = {
-		type,
-		props,
-		children,
-	}
+import { createVnode } from "./vnode"
 
-	return vnode
+export function h(type, props?, children?) {
+
+	return createVnode(type, props, children)
 }
