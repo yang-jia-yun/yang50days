@@ -10,6 +10,11 @@ export function createApp(rootComponent) {
 
 			const vnode = createVnode(rootComponent)
 
+			// 兼容 rootContainer 为选择器的情况
+			if (typeof rootContainer === 'string') {
+				rootContainer = document.querySelector(rootContainer)
+			}
+
 			render(vnode, rootContainer)
 		}
 	}

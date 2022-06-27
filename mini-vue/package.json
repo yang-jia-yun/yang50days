@@ -13,8 +13,8 @@
 	},
 	"name": "mini-vue",
 	"version": "1.0.0",
-	"main": "/lib/mini-vue.cjs.js",
-	"module": "/lib/mini-vue.esm.js",
+	"main": "lib/mini-vue.cjs.js",
+	"module": "lib/mini-vue.esm.js",
 	"license": "MIT",
 	"devDependencies": {
 		"@babel/core": "^7.18.5",
