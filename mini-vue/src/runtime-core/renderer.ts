@@ -24,18 +24,22 @@ function processComponent(vnode: any, container: any) {
 	mountComponent(vnode, container)
 }
 
-function mountComponent(vnode: any, container: any) {
-	const instance = createComponentInstance(vnode)
+function mountComponent(initialVnode: any, container: any) {
+	const instance = createComponentInstance(initialVnode)
 	setupComponent(instance)
-	setupRenderEffect(instance, container)
+	setupRenderEffect(instance, initialVnode, container)
 }
 
-function setupRenderEffect(instance, container) {
+function setupRenderEffect(instance, initialVnode, container) {
 	// const subTree = instance.render()
 	const { proxy } = instance
 	// TODO call的作用是把proxy当作内容的this指向，实现对 setup 里return的值的调用 ？
 	const subTree = instance.render.call(proxy)
 	patch(subTree, container)
+
+	// instance.vnode.el = subTree.el
+	// TODO 节点挂载后才会存在真实节点，此处的问题在于 vnode 貌似可以不传，直接使用 instance.vnode ?
+	initialVnode.el = subTree.el
 }
 
 function processElement(vnode: any, container: any) {
@@ -45,7 +49,8 @@ function processElement(vnode: any, container: any) {
 function mountElement(vnode: any, container: any) {
 	// 此时 vnode 的type即为标签类型
 	const { type, children, props } = vnode
-	const el = document.createElement(type)
+	// const el = document.createElement(type)
+	const el = (vnode.el = document.createElement(type))
 
 	// props 是一个对象
 	if (isObject(props)) {

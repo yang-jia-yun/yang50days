@@ -1,8 +1,11 @@
+import { PublicInstanceProxyHandlers } from "./componentPublicInstance"
+
 export function createComponentInstance(vnode: any) {
 	const instance = {
 		vnode,
 		type: vnode.type,
 		setupState: {},// 初始化组件全局状态
+		el: null,
 	}
 
 	return instance
@@ -23,14 +26,23 @@ function setupStatefulComponent(instance) {
 	const { setup } = Component
 
 	// 构造一个代理对象
-	const proxy = new Proxy({}, {
-		get(target, key) {
-			const { setupState } = instance
+	const proxy = new Proxy(
+		{ _: instance },
+		PublicInstanceProxyHandlers
+		// {
+		// get(target, key) {
+		// 	const { setupState } = instance
 
-			if (key in setupState) {
-				return setupState[key]
-			}
-		},
+		// 	if (key in setupState) {
+		// 		return setupState[key]
+		// 	}
+
+		// 	if (key === '$el') {
+		// 		return instance.vnode.el
+		// 	}
+
+		// 	return null
+		// },
 		// set(target, key, val) {
 		// 	const { setupState } = instance
 
@@ -39,7 +51,8 @@ function setupStatefulComponent(instance) {
 		// 	}
 		// 	return true
 		// }
-	})
+		// }
+	)
 
 	instance.proxy = proxy
 
