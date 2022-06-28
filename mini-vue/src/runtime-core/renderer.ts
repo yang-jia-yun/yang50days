@@ -31,7 +31,10 @@ function mountComponent(vnode: any, container: any) {
 }
 
 function setupRenderEffect(instance, container) {
-	const subTree = instance.render()
+	// const subTree = instance.render()
+	const { proxy } = instance
+	// TODO call的作用是把proxy当作内容的this指向，实现对 setup 里return的值的调用 ？
+	const subTree = instance.render.call(proxy)
 	patch(subTree, container)
 }
 

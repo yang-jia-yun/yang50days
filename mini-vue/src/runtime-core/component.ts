@@ -2,6 +2,7 @@ export function createComponentInstance(vnode: any) {
 	const instance = {
 		vnode,
 		type: vnode.type,
+		setupState: {},// 初始化组件全局状态
 	}
 
 	return instance
@@ -20,6 +21,27 @@ function setupStatefulComponent(instance) {
 	const Component = instance.vnode.type
 
 	const { setup } = Component
+
+	// 构造一个代理对象
+	const proxy = new Proxy({}, {
+		get(target, key) {
+			const { setupState } = instance
+
+			if (key in setupState) {
+				return setupState[key]
+			}
+		},
+		// set(target, key, val) {
+		// 	const { setupState } = instance
+
+		// 	if (key in setupState) {
+		// 		return Reflect.set(setupState, key, val)
+		// 	}
+		// 	return true
+		// }
+	})
+
+	instance.proxy = proxy
 
 	if (setup) {
 		const setupResult = setup()
