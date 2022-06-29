@@ -8,7 +8,15 @@ export default {
 		window.self = this
 		return h(
 			'div',
-			{ id: 'child' },
+			{
+				id: 'child',
+				onClick() {
+					console.log('click me')
+				},
+				onMouseDown() {
+					console.log('onmousedown')
+				},
+			},
 			// 1. 常规this √
 			// 2. this.$el 如何实现
 			'hello, ' + this.msg

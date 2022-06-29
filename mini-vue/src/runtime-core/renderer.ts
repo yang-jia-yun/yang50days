@@ -55,7 +55,15 @@ function mountElement(vnode: any, container: any) {
 	// props 是一个对象
 	if (isObject(props)) {
 		for (const key in props) {
-			el.setAttribute(key, props[key])
+			const val = props[key]
+			// 添加事件注册，事件表示 onEventName
+			const isOn = (key: string) => /^on[A-Z]/.test(key)
+			if (isOn(key)) {
+				const event = key.slice(2).toLowerCase()
+				el.addEventListener(event, val)
+			} else {
+				el.setAttribute(key, val)
+			}
 		}
 	}
 
