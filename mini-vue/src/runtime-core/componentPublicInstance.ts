@@ -2,17 +2,31 @@
 // 	$el: (root) => root.vnode.el
 // }
 
+import { hasOwn } from "../shared"
+
 const publicProperiesMap = {
 	$el: (i) => i.vnode.el
 }
 
 export const PublicInstanceProxyHandlers = {
 	get({ _: instance }, key) {
-		const { setupState } = instance
+		const { setupState, props } = instance
 
-		if (key in setupState) {
+		if (hasOwn(setupState, key)) {
 			return setupState[key]
 		}
+		if (hasOwn(props, key)) {
+			return props[key]
+		}
+		// if (key in setupState) {
+		// 	return setupState[key]
+		// }
+
+		// if (key in props) {
+		// 	return props[key]
+		// }
+
+		// 处理 props的值
 
 		// if (key === '$el') {
 		// 	return instance.vnode.el
