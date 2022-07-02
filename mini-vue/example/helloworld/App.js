@@ -11,12 +11,12 @@ export default {
 			'div',
 			{
 				id: 'child',
-				onClick() {
-					console.log('click me')
-				},
-				onMouseDown() {
-					console.log('onmousedown')
-				},
+				// onClick() {
+				// 	console.log('click me')
+				// },
+				// onMouseDown() {
+				// 	console.log('onmousedown')
+				// },
 			},
 			// 1. 常规this √
 			// 2. this.$el 如何实现
@@ -26,7 +26,18 @@ export default {
 			// 	h('p', { class: 'red', style: 'color: red;' }, 'first p'),
 			// 	h('p', { class: 'green', style: 'color: green;' }, 'second p'),
 			// ]
-			[h('p', {}, 'hello' + this.msg), h(Foo, { count: 666 })]
+			[
+				h('p', {}, 'hello' + this.msg),
+				h(Foo, {
+					count: 666,
+					onAdd({ id }) {
+						console.log('App emit event => add, receive id = ', id)
+					},
+					onAddFoo() {
+						console.log('App emit event: add-foo')
+					},
+				}),
+			]
 		)
 	},
 	setup() {

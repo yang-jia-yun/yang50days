@@ -1,4 +1,5 @@
 import { shallowReadonly } from "../reactivity/reactive"
+import { emit } from "./componentEmit"
 import { initProps } from "./ComponentProps"
 import { PublicInstanceProxyHandlers } from "./componentPublicInstance"
 
@@ -8,7 +9,12 @@ export function createComponentInstance(vnode: any) {
 		type: vnode.type,
 		setupState: {},// 初始化组件全局状态
 		el: null,
+		emit: () => { }
 	}
+
+	// 用户使用 emit 的时候，是直接传递事件名的，但是调用事件需要依赖与父组件，
+	// 所以此处通过 bind 巧妙实现既能访问到instance, 用户也仅需传递 事件名 即可
+	instance.emit = emit.bind(null, instance) as any
 
 	return instance
 }
@@ -59,7 +65,9 @@ function setupStatefulComponent(instance) {
 	instance.proxy = proxy
 
 	if (setup) {
-		const setupResult = setup(shallowReadonly(instance.props))
+		const setupResult = setup(shallowReadonly(instance.props), {
+			emit: instance.emit
+		})
 		handleSetupResult(instance, setupResult)
 	}
 
