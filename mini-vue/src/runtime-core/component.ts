@@ -1,6 +1,6 @@
 import { shallowReadonly } from "../reactivity/reactive"
 import { emit } from "./componentEmit"
-import { initProps } from "./ComponentProps"
+import { initProps } from "./componentProps"
 import { PublicInstanceProxyHandlers } from "./componentPublicInstance"
 
 export function createComponentInstance(vnode: any) {

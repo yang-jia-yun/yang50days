@@ -4,6 +4,7 @@ export function emit(instance, event, ...args) {
 	const { props } = instance
 
 	// TODO TPP?
+	// 先写一个特定行为，再抽象成通用行为
 
 	// function capitalize(str: string) {
 	// 	return str.charAt(0).toUpperCase() + str.slice(1)
