@@ -1,6 +1,7 @@
 import { isObject } from '../shared'
 import { ShapFlags } from '../shared/ShapFlags'
 import { createComponentInstance, setupComponent } from "./component"
+import { Fragment } from './vnode'
 
 export function render(vnode, container) {
 	// 执行 patch, 打补丁
@@ -13,12 +14,19 @@ function patch(vnode, container) {
 	// elememt 是string类型, 正常的 type 应该是一个 vnode 对象
 	// 想象入口创建的app，就是传入的 App component， 然后创建 vnode 的第一个参数就是 type
 	// console.log(vnode);
-	const { shapFlag } = vnode
-	// if (typeof vnode.type === 'string') {
-	if (shapFlag & ShapFlags.ELEMENT) {
-		processElement(vnode, container)
-	} else if (shapFlag & ShapFlags.STATEFUL_COMPONENT) {
-		processComponent(vnode, container)
+	const { type, shapFlag } = vnode
+
+	switch (type) {
+		case Fragment:
+			processFragment(vnode, container)
+			break
+		default:
+			if (shapFlag & ShapFlags.ELEMENT) {
+				processElement(vnode, container)
+			} else if (shapFlag & ShapFlags.STATEFUL_COMPONENT) {
+				processComponent(vnode, container)
+			}
+			break
 	}
 }
 
@@ -86,5 +94,10 @@ function mountElement(vnode: any, container: any) {
 
 function mountChildren(vnode: any, container) {
 	vnode.children.forEach(child => patch(child, container))
+}
+
+function processFragment(vnode: any, container: any) {
+	// 已知 slot是 一个数组，且仅需渲染 对应children，则可直接调用 mountChildren
+	mountChildren(vnode, container)
 }
 

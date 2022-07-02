@@ -1,5 +1,7 @@
 import { ShapFlags } from "../shared/ShapFlags"
 
+export const Fragment = Symbol('Fragment')
+
 export function createVnode(type, props?, children?) {
 	const vnode = {
 		type,
