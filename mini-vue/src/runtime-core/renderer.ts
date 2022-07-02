@@ -1,7 +1,7 @@
 import { isObject } from '../shared'
 import { ShapFlags } from '../shared/ShapFlags'
 import { createComponentInstance, setupComponent } from "./component"
-import { Fragment } from './vnode'
+import { Fragment, TEXT } from './vnode'
 
 export function render(vnode, container) {
 	// 执行 patch, 打补丁
@@ -19,6 +19,9 @@ function patch(vnode, container) {
 	switch (type) {
 		case Fragment:
 			processFragment(vnode, container)
+			break
+		case TEXT:
+			processText(vnode, container)
 			break
 		default:
 			if (shapFlag & ShapFlags.ELEMENT) {
@@ -99,5 +102,11 @@ function mountChildren(vnode: any, container) {
 function processFragment(vnode: any, container: any) {
 	// 已知 slot是 一个数组，且仅需渲染 对应children，则可直接调用 mountChildren
 	mountChildren(vnode, container)
+}
+
+function processText(vnode: any, container: any) {
+	// vnode 就是纯粹的 text 内容，直接创建即可
+	const el = (vnode.el = document.createTextNode(vnode.children))
+	container.append(el)
 }
 

@@ -1,4 +1,4 @@
-import { h } from '../../lib/mini-vue.esm.js'
+import { h, createTextVNode } from '../../lib/mini-vue.esm.js'
 import Foo from './Foo.js'
 
 export default {
@@ -22,7 +22,11 @@ export default {
 			Foo,
 			{},
 			{
-				header: ({ age }) => h('p', {}, '123, slot param age = ' + age),
+				header: ({ age }) => [
+					h('p', {}, '123, slot param age = ' + age),
+					'我是text节点',
+					createTextVNode('我是text节点'),
+				],
 				footer: () => h('p', {}, '456'),
 			}
 		)
