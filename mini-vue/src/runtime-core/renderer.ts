@@ -106,7 +106,7 @@ function processFragment(vnode: any, container: any) {
 
 function processText(vnode: any, container: any) {
 	// vnode 就是纯粹的 text 内容，直接创建即可
-	const el = (vnode.el = document.createTextNode(vnode.children))
-	container.append(el)
+	const textNode = (vnode.el = document.createTextNode(vnode.children))
+	container.append(textNode)
 }
 

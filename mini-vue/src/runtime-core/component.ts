@@ -67,9 +67,12 @@ function setupStatefulComponent(instance) {
 	instance.proxy = proxy
 
 	if (setup) {
+		// 调用之前赋值 currentInstance
+		setCurrentInstance(instance)
 		const setupResult = setup(shallowReadonly(instance.props), {
 			emit: instance.emit
 		})
+		setCurrentInstance(null) // 重置的意义是？
 		handleSetupResult(instance, setupResult)
 	}
 
@@ -95,3 +98,11 @@ function finishComponentSetup(instance: any) {
 	}
 }
 
+let currentInstance = null
+export function getCurrentInstance() {
+	return currentInstance
+}
+
+function setCurrentInstance(instance) {
+	currentInstance = instance
+}
