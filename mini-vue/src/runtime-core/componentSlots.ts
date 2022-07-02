@@ -1,3 +1,5 @@
+import { ShapFlags } from "../shared/ShapFlags"
+
 export function initSlots(instance, children) {
 	// 支持 单个及数组形式
 	// instance.slots = Array.isArray(children) ? children : [children]
@@ -9,10 +11,12 @@ export function initSlots(instance, children) {
 	// }
 
 	// instance.slots = slots
-	// const { vnode } = instance
-	// console.log(vnode.shapFlags)
+	// normalizeObjectSlots(children, instance.slots)
 
-	normalizeObjectSlots(children, instance.slots)
+	const { vnode } = instance
+	if (vnode.shapFlag & ShapFlags.SLOT_CHILDREN) {
+		normalizeObjectSlots(children, instance.slots)
+	}
 }
 
 function normalizeObjectSlots(children, slots) {

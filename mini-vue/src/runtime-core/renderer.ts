@@ -1,4 +1,5 @@
 import { isObject } from '../shared'
+import { ShapFlags } from '../shared/ShapFlags'
 import { createComponentInstance, setupComponent } from "./component"
 
 export function render(vnode, container) {
@@ -12,9 +13,11 @@ function patch(vnode, container) {
 	// elememt 是string类型, 正常的 type 应该是一个 vnode 对象
 	// 想象入口创建的app，就是传入的 App component， 然后创建 vnode 的第一个参数就是 type
 	// console.log(vnode);
-	if (typeof vnode.type === 'string') {
+	const { shapFlag } = vnode
+	// if (typeof vnode.type === 'string') {
+	if (shapFlag & ShapFlags.ELEMENT) {
 		processElement(vnode, container)
-	} else {
+	} else if (shapFlag & ShapFlags.STATEFUL_COMPONENT) {
 		processComponent(vnode, container)
 	}
 }
@@ -48,7 +51,7 @@ function processElement(vnode: any, container: any) {
 
 function mountElement(vnode: any, container: any) {
 	// 此时 vnode 的type即为标签类型
-	const { type, children, props } = vnode
+	const { type, children, props, shapFlag } = vnode
 	// const el = document.createElement(type)
 	const el = (vnode.el = document.createElement(type))
 
@@ -67,9 +70,11 @@ function mountElement(vnode: any, container: any) {
 		}
 	}
 
-	if (typeof children === 'string') {
+	// if (typeof children === 'string') {
+	if (shapFlag & ShapFlags.TEXT_CHILDREN) {
 		el.textContent = children
-	} else if (Array.isArray(children)) {
+		// } else if (Array.isArray(children)) {
+	} else if (shapFlag & ShapFlags.ARRAY_CHILDREN) {
 		// 每个 元素都有可能是 element 或者 vnode， 需要调用patch进行对应处理
 		// children.forEach(child => patch(child, el))
 		mountChildren(vnode, el)
