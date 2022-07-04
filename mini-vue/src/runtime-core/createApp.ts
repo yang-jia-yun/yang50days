@@ -15,7 +15,7 @@ export function createApp(rootComponent) {
 				rootContainer = document.querySelector(rootContainer)
 			}
 
-			render(vnode, rootContainer)
+			render(vnode, rootContainer, null)
 		}
 	}
 }
