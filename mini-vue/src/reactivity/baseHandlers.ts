@@ -56,7 +56,7 @@ export const readonlyHandler = {
 	get: readonlyGet,
 	set(target, key, value) {
 		// 只读，当尝试修改值时 应该 发出警告
-		console.warn(`current target ${target} is readonly, can't change the props`)
+		console.warn(`key ${key} is readonly, can't change the props`)
 		return true
 	}
 }

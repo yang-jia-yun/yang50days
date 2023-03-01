@@ -1,6 +1,6 @@
 import { effect } from "../effect"
 import { reactive } from "../reactive"
-import { isRef, ref, unRef } from "../ref"
+import { isRef, ref, unRef, proxyRefs } from "../ref"
 
 describe('ref', () => {
 	it('happy path', () => {
@@ -69,5 +69,28 @@ describe('ref', () => {
 
 		expect(unRef(a)).toBe(1)
 		expect(unRef(1)).toBe(1)
+	})
+
+	it('proxyRefs', () => {
+		const user = {
+			age: ref(21),
+			name: 'buer'
+		}
+
+		// 可跳过 .value 直接读取属性值
+		const proxyUser = proxyRefs(user)
+
+		expect(user.age.value).toBe(21)
+		expect(proxyUser.age).toBe(21)
+
+		// 设置值的情况
+
+		proxyUser.age = 22
+		expect(user.age.value).toBe(22)
+		expect(proxyUser.age).toBe(22)
+
+		proxyUser.age = ref(23)
+		expect(user.age.value).toBe(23)
+		expect(proxyUser.age).toBe(23)
 	})
 })
