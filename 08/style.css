@@ -3,7 +3,21 @@ input {
 	border: 0;
 	background-color: cadetblue;
 	border-bottom: 1px solid white;
+	width: 400px;
+	height: 50px;
+	outline: none;
+	font-size: 20px;
+	pointer-events: inherit;
 }
+
+body {
+	background-color: rgb(195, 201, 199);
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
 .main {
 	width: 500px;
 	height: 600px;
@@ -12,24 +26,137 @@ input {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	margin: auto;
+	border-radius: 8px;
 }
-.main div {
-	margin-top: 40px;
-}
+
 p {
 	color: white;
+	font-size: 32px;
 }
+
+.main>div {
+	margin-top: 70px;
+	position: relative;
+}
+
+.main div .email,
+.main div .password {
+	font-size: 20px;
+	text-align: left;
+	position: absolute;
+	z-index: 99;
+	display: flex;
+	transform: translateY(10px);
+}
+
+.main div p span:nth-child(1) {
+	animation-delay: 0s;
+}
+
+.main div p span:nth-child(2) {
+	animation-delay: 0.05s;
+}
+
+.main div p span:nth-child(3) {
+	animation-delay: 0.1s;
+}
+
+.main div p span:nth-child(4) {
+	animation-delay: 0.15s;
+}
+
+.main div p span:nth-child(5) {
+	animation-delay: 0.2s;
+}
+
+.main div p span:nth-child(6) {
+	animation-delay: 0.25s;
+}
+
+.main div p span:nth-child(7) {
+	animation-delay: 0.3s;
+}
+
+.main div p span:nth-child(8) {
+	animation-delay: 0.35s;
+}
+
+.active {
+	border-bottom: 1px solid rgb(181, 218, 250);
+}
+
 .ani {
-	animation-duration: 1s;
+	animation-duration: 0.5s;
 	animation-name: slidein;
+	color: rgb(181, 218, 250);
+	transform: translateY(-30px);
 }
 
 @keyframes slidein {
 	from {
-		margin-top: 20px;
+		transform: translateY(0px);
 	}
 
 	to {
-		margin-top: 0;
+		transform: translateY(-30px);
 	}
+}
+
+.blurAni {
+	animation-duration: 0.5s;
+	animation-name: slideinTwo;
+	color: white;
+	transform: translateY(0px);
+}
+
+@keyframes slideinTwo {
+	from {
+		transform: translateY(-30px);
+	}
+
+	to {
+		transform: translateY(0px);
+	}
+}
+
+.button {
+	width: 400px;
+	border-radius: 8px;
+	text-align: center;
+	height: 50px;
+	line-height: 50px;
+	background-color: rgb(181, 218, 250);
+}
+
+.tips {
+	width: 400px;
+	text-align: left;
+	color: white;
+}
+
+.tips>span {
+	color: rgb(181, 218, 250);
+}
+
+.buttonActive {
+	transition: transform 0.5s ease;
+	transform: scale(0.9, 0.9);
+}
+
+.activeText {
+	cursor: pointer;
+}
+
+.requiredTips {
+	background-color: white;
+	width: 200px;
+	height: 40px;
+	position: absolute;
+	bottom: -44px;
+	text-align: center;
+	line-height: 40px;
+	left: 100px;
+	border-radius: 6px;
+	z-index: 99;
 }
