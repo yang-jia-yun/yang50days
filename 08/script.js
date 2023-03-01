@@ -38,12 +38,6 @@ button.addEventListener('click', () => {
 	item.innerText = '请填写此项'
 	item.classList.add('requiredTips')
 	item.id = 'requiredTips'
-	// input.forEach((val) => {
-	// 	if (val.required && !val.innerHTML) {
-	// 		val.parentNode.appendChild(item)
-	// 		return val
-	// 	}
-	// })
 	for (let val = 0; val < input.length; val++) {
 		if (input[val].required && !input[val].value) {
 			input[val].parentNode.appendChild(item)
