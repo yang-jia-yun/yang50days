@@ -12,11 +12,15 @@ input.forEach((res) => {
 		})
 	})
 	res.addEventListener('blur', () => {
-		item.classList.remove('active')
-		item.previousSibling.childNodes.forEach((val) => {
-			val.classList.remove('ani')
-			val.classList.add('blurAni')
-		})
+		if (!res.value) {
+			item.classList.remove('active')
+			item.previousSibling.childNodes.forEach((val) => {
+				val.classList.remove('ani')
+				val.classList.add('blurAni')
+			})
+		}
+		let req = document.getElementById('requiredTips')
+		if (req) req.parentNode.removeChild(req)
 	})
 })
 button.addEventListener('mousedown', () => {
@@ -30,11 +34,17 @@ button.addEventListener('mouseenter', () => {
 })
 //点击login
 button.addEventListener('click', () => {
-	input.forEach((item) => {
-		if (item.required && !item.innerHTML) {
-			
+	let item = document.createElement('div')
+	item.innerText = '请填写此项'
+	item.classList.add('requiredTips')
+	item.id = 'requiredTips'
+	for (let val = 0; val < input.length; val++) {
+		if (input[val].required && !input[val].value) {
+			input[val].parentNode.appendChild(item)
+			input[val].focus()
+			return
 		}
-	})
+	}
 })
 text.addEventListener('mouseenter', () => {
 	text.classList.add('activeText')

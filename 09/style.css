@@ -1,0 +1,18 @@
+body {
+	background-color: rgb(178, 105, 228);
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.main>span {
+	background-color: rgb(146, 58, 204);
+	color: white;
+	text-align: center;
+	padding: 20px 30px;
+	margin: 20px;
+	border-radius: 4px;
+	cursor: pointer;
+	display: inline-block;
+}

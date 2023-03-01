@@ -35,7 +35,7 @@ p {
 	font-size: 32px;
 }
 
-.main div {
+.main>div {
 	margin-top: 70px;
 	position: relative;
 }
@@ -146,4 +146,17 @@ p {
 
 .activeText {
 	cursor: pointer;
+}
+
+.requiredTips {
+	background-color: white;
+	width: 200px;
+	height: 40px;
+	position: absolute;
+	bottom: -44px;
+	text-align: center;
+	line-height: 40px;
+	left: 100px;
+	border-radius: 6px;
+	z-index: 99;
 }
