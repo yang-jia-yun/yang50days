@@ -1,0 +1,27 @@
+.main {
+	height: 100vh;
+	width: 100vw;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgb(141, 46, 170);
+}
+
+.main>div {
+	color: white;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 40px;
+}
+
+.main>div>i {
+	font-size: 48px;
+	font-style: normal;
+}
+
+.main>div>span:first-of-type {
+	font-size: 28px;
+	margin: 20px;
+}
