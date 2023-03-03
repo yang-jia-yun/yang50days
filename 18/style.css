@@ -4,9 +4,7 @@
 	position: relative;
 	background-repeat: no-repeat;
 	background-size: cover;
-	/* display: flex;
-	align-items: center;
-	justify-content: center; */
+	background-position: center center;
 }
 
 .main::after {
@@ -16,7 +14,7 @@
 	right: 0;
 	left: 0;
 	bottom: 0;
-	background-color: rgba(0, 0, 0, 0.7);
+	background-color: rgba(32, 32, 32, 0.7);
 }
 
 .middle {
@@ -35,6 +33,7 @@
 	height: 70vh;
 	border: none;
 	overflow: hidden;
+	position: relative;
 }
 
 .middle>div .small-img {
@@ -44,8 +43,9 @@
 	background-size: cover;
 	background-position: center center;
 	position: absolute;
-	top: calc(-15vh - 50px);
 	left: calc(-15vw - 50px);
+	top: -15vh;
+	/* left: -15vw; */
 }
 
 .middle>span {
