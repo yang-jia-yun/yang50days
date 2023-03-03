@@ -1,0 +1,77 @@
+.main {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.mode {
+	width: 100px;
+	height: 30px;
+	line-height: 30px;
+	background-color: black;
+	color: white;
+	border-radius: 4px;
+	text-align: center;
+	margin-top: 100px;
+}
+
+.circular {
+	margin-top: 100px;
+	border-radius: 50%;
+	border: 5px solid black;
+	width: 150px;
+	height: 150px;
+	position: relative;
+}
+
+.hand {
+	width: 3px;
+	height: 30px;
+	background-color: black;
+	position: absolute;
+	bottom: 50%;
+	left: 50%;
+	transform: rotate(45deg);
+	transform-origin: right bottom;
+}
+
+.hand-minute {
+	width: 3px;
+	height: 50px;
+	background-color: black;
+	position: absolute;
+	bottom: 50%;
+	left: 50%;
+	transform: rotate(145deg);
+	transform-origin: right bottom;
+}
+
+.hand-second {
+	width: 2px;
+	height: 60px;
+	background-color: red;
+	position: absolute;
+	bottom: 50%;
+	left: 50%;
+	transform: rotate(145deg);
+	transform-origin: right bottom;
+}
+
+/* .circular::after {
+	position: absolute;
+	content: '';
+	width: 4px;
+	height: 4px;
+	border: 2px solid red;
+	bottom: calc(50% - 2px);
+	left: calc(50% - 2px);
+	border-radius: 50%;
+	z-index: 99;
+} */
+
+.time {
+	margin-top: 40px;
+	margin-bottom: 20px;
+}
